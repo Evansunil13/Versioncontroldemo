@@ -1,0 +1,139 @@
+#Version 1
+#Author: Evan Sunil
+#Evan Sunils Spacecraft hiring program
+
+def availability_check(spacecraft_name):
+    
+    spacecrafts_available = ["Rocket Lab Photon", "SpaceX Falcon 9", "Blue Origin New Shepard"]
+    return spacecraft_name in spacecrafts_available
+
+def main():
+    while True: 
+        print("\nWelcome to Evan's Spacecraft Emporium Hire Program!")
+        print("\nPlease select your preferred spacecraft model:\n")
+        print("1. Rocket Lab Photon (Daily Hire Charge: $10,000)")
+        print("2. SpaceX Falcon 9 (Daily Hire Charge: $5,000)")
+        print("3. Blue Origin New Shepard (Daily Hire Charge: $8,000)\n")
+
+        #This is the list function for the spacecraft option
+        spacecraft_options = {
+            1: ("Rocket Lab Photon", 10000),
+            2: ("SpaceX Falcon 9", 5000),
+            3: ("Blue Origin New Shepard", 8000)
+        }
+
+        #This function is asking the user the user of this program for their name
+        while True:
+            name = input("Hello, what is your name? ").strip()
+            if name.replace(" ", "").isalpha():
+                print(f"\nWelcome to Evan's Space Emporium, {name}!\n")
+                break
+            elif name == "":
+                print("\nPlease enter your name, do not leave it blank.\n")
+            else:
+                print("\nInvalid input. Please enter a valid name with only letters.\n")
+
+        #This function is asking the user of this program for their choice of spacecraft
+        while True:
+            spacecraft = input("What spacecraft would you like to hire? (Enter 1, 2, or 3): ")
+            print("")
+            if spacecraft.isdigit():
+                spacecraft = int(spacecraft)
+                if spacecraft in spacecraft_options:
+                    spacecraft_name, daily_rate = spacecraft_options[spacecraft]
+                    if availability_check(spacecraft_name):
+                        break
+                    else:
+                        print(f"Sorry, the {spacecraft_name} is currently unavailable to hire. Please choose another spacecraft.\n")
+                else:
+                    print("Invalid choice. Please enter a number between 1 and 3.\n")
+            else:
+                print("Invalid input. Please enter a digit (1, 2, or 3).\n")
+
+        #This function is asking the user of this program for the number of passengers they will have on the spacecraft
+        while True:
+            print("[Note: You'll ve counted as a passenger, but no additional $500 charge as you're the hirer]")
+            passengers = input("How many passengers would you like on your spacecraft? (1-10): ")
+            print("")
+            if passengers.isdigit():
+                passengers = int(passengers)
+                if 1 <= passengers <= 10:
+                    break
+                else:
+                    print("Passenger count must be between 1 and 10.\n")
+            else:
+                print("Invalid input. Please enter a whole number between 1 and 10.\n")
+
+        #This function is asking the user of this program for the number of days they will be hiring the spacecraft
+        while True:
+            days = input("How many days would you like to hire the spacecraft? (1-30): ")
+            print("")
+            if days.isdigit():
+                days = int(days)
+                if 1 <= days <= 30:
+                    break
+                else:
+                    print("Number of hiring days must be between 1 and 30.\n")
+            else:
+                print("Invalid input. Please enter a whole number between 1 and 30.\n")
+
+        #This function us to display the cost of the pilot to the user
+        pilot_cost_per_day = 500
+        print(f"\nPilot cost is ${pilot_cost_per_day} per day.\n")
+
+        # This function asks if the user of this program needs a pilot on their spacecraft
+        while True:
+            pilot_needed = input(f"Do you need a pilot for this hire? (yes/no): ").lower().strip()
+            if pilot_needed == "yes":
+                pilot_needed = True
+                print("An experienced pilot will be assigned to your spacecraft.\n")
+                break
+            elif pilot_needed == "no":
+                pilot_needed = False
+                print("You have chosen to pilot the hired spacecraft yourself.\n")
+                break
+            else:
+                print("Invalid input. Please enter 'yes' or 'no'.\n")
+
+        #This Function is for calculating the cost of the whole hire
+        base_cost = days * daily_rate
+        pilot_cost = days * pilot_cost_per_day if pilot_needed else 0
+        passenger_cost = (passengers - 1) * 500 * days  # Excluding the hirer
+
+        total_cost = base_cost + pilot_cost + passenger_cost
+
+        #This the Receipt function
+        print("\n" + "="*40)
+        print("        SPACECRAFT HIRE RECEIPT")
+        print("="*40)
+        print(f"Customer Name: {name}")
+        print(f"Spacecraft: {spacecraft_name}")
+        print(f"Hire Period: {days} days")
+        print(f"Passengers: {passengers}")
+        print(f"Pilot Required: {'Yes' if pilot_needed else 'No'}")
+        print("-" * 40)
+        print(f"Base Cost: ${base_cost:,}")
+        if pilot_needed:
+            print(f"Pilot Cost: ${pilot_cost:,}")
+        print(f"Passenger Cost: ${passenger_cost:,}")
+        print("=" * 40)
+        print(f"TOTAL COST: ${total_cost:,}")
+        print("=" * 40)
+
+        print("\nThank you for using Evan's Spacecraft Hire Program!")
+
+        #This function allows the user to restart the program
+        while True:
+            restart = input("\nWould you like to hire another spacecraft? (yes/no): ").lower().strip()
+            if restart == "yes":
+                print("\nRestarting program...\n")
+                break  
+            elif restart == "no":
+                print("\nThank you for using Evan's Spacecraft Hire Program! Goodbye!\n")
+                return  
+            else:
+                print("Invalid input. Please enter 'yes' or 'no'.\n")
+
+#Run the program
+main()
+
